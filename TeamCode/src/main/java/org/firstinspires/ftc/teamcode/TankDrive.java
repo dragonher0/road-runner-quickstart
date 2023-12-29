@@ -65,19 +65,19 @@ public final class TankDrive {
         public RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection =
                 RevHubOrientationOnRobot.LogoFacingDirection.UP;
         public RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection =
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+                RevHubOrientationOnRobot.UsbFacingDirection.LEFT;
 
         // drive model parameters
-        public double inPerTick = 0;
-        public double trackWidthTicks = 0;
+        public double inPerTick = 0.001401026733;
+        public double trackWidthTicks = 12241.25577520044;
 
         // feedforward parameters (in tick units)
-        public double kS = 0;
-        public double kV = 0;
-        public double kA = 0;
+        public double kS = 1.7230072058338237;
+        public double kV = 0.0007736305576815347;
+        public double kA = 0.0000001;
 
         // path profile parameters (in inches)
-        public double maxWheelVel = 50;
+        public double maxWheelVel = 10;
         public double minProfileAccel = -30;
         public double maxProfileAccel = 50;
 
@@ -150,7 +150,7 @@ public final class TankDrive {
             }
 
             // TODO: reverse encoder directions if needed
-            //   leftEncs.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
+            rightEncs.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
 
             for (Encoder e : leftEncs) {
                 lastLeftPos += e.getPositionAndVelocity().position;
@@ -219,8 +219,8 @@ public final class TankDrive {
         // TODO: make sure your config has motors with these names (or change them)
         //   add additional motors on each side if you have them
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
-        leftMotors = Arrays.asList(hardwareMap.get(DcMotorEx.class, "left"));
-        rightMotors = Arrays.asList(hardwareMap.get(DcMotorEx.class, "right"));
+        leftMotors = Arrays.asList(hardwareMap.get(DcMotorEx.class, "left_drive"));
+        rightMotors = Arrays.asList(hardwareMap.get(DcMotorEx.class, "right_drive"));
 
         for (DcMotorEx m : leftMotors) {
             m.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -230,7 +230,7 @@ public final class TankDrive {
         }
 
         // TODO: reverse motor directions if needed
-        //   leftMotors.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
+        rightMotors.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
 
         // TODO: make sure your config has an IMU with this name (can be BNO or BHI)
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html
